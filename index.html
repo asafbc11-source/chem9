@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>חזרה לכימיה ט׳</title>
+<meta name="description" content="חזרה ותרגול לקראת המבחן בכימיה של כיתה ט׳: השפה הכימית, היערכות אלקטרונים, קשרים, תגובה כימית, אנדותרמי ואקסותרמי.">
+<meta name="theme-color" content="#F3F5F8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10161D" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="כימיה ט׳">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="fonts/plex-hebrew-400-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/plex-hebrew-700-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script src="data.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="tb">
+    <button class="iconbtn" id="back" type="button" aria-label="חזרה" hidden></button>
+    <h1 id="title">חזרה לכימיה ט׳</h1>
+    <span class="cd" id="cd"></span>
+    <button class="iconbtn" id="close" type="button" aria-label="יציאה מהתרגול" hidden></button>
+  </div>
+</header>
+<main id="view" tabindex="-1">
+  <noscript><p>כדי להשתמש באפליקציה צריך לאפשר JavaScript בדפדפן.</p></noscript>
+</main>
+<div class="dock" id="dock" hidden><div class="dock-inner" id="dockin"></div></div>
+<nav class="tabbar" id="tabbar" aria-label="ניווט ראשי">
+  <button class="tab" type="button" data-tab="learn"><span class="pill" data-icon="book"></span>לימוד</button>
+  <button class="tab" type="button" data-tab="practice"><span class="pill" data-icon="practice"></span>תרגול</button>
+  <button class="tab" type="button" data-tab="exam"><span class="pill" data-icon="timer"></span>מבחן דמה</button>
+</nav>
+</body>
+</html>
