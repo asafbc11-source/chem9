@@ -499,8 +499,43 @@ view.addEventListener('keydown', e => {
 });
 view.addEventListener('input', e => {if(e.target.matches('.inp')) e.target.classList.remove('right','wrong')});
 
+/* ---------- install prompt (shown right away when the app is opened in a browser) ---------- */
+const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isIOSSafari = isIOS && /Safari/.test(navigator.userAgent) && !/CriOS|FxiOS|EdgiOS|GSA|Instagram|FBAN|FBAV/.test(navigator.userAgent);
+let installEvt = null;
+function laterSaid(){try{return sessionStorage.getItem('chem9-install-later') === '1'}catch(e){return false}}
+function showInstall(){
+  if(standalone() || laterSaid() || $('#isheet')) return;
+  if(!installEvt && !isIOS) return; // Android/desktop: wait for the browser to say the app can be installed
+  const steps = isIOS
+    ? (isIOSSafari ? '' : '<p class="small">קודם פתחו את הקישור בדפדפן ספארי.</p>')+
+      '<ol class="isteps"><li>לוחצים על כפתור השיתוף <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="שיתוף"><path d="M12 15V3M8 7l4-4 4 4M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg> בתחתית המסך.</li><li>בוחרים <b>הוספה למסך הבית</b>.</li><li>לוחצים <b>הוסף</b>.</li></ol>'
+    : '<p>מתקינים פעם אחת, ואז האפליקציה נפתחת מהאייקון במסך הבית, גם בלי אינטרנט.</p>';
+  const el = document.createElement('div');
+  el.id = 'isheet'; el.className = 'iback';
+  el.innerHTML = '<div class="isheet" role="dialog" aria-modal="true" aria-labelledby="ititle"><div class="ihead"><img src="icons/icon-192.png" alt="" width="56" height="56"><div><h2 id="ititle" class="title">התקנת האפליקציה</h2><p class="small muted">אייקון במסך הבית, כמו כל אפליקציה</p></div></div>'+steps+
+    '<div class="btnrow">'+(isIOS ? '<button class="btn wide" type="button" data-iact="later">הבנתי</button>' : '<button class="btn wide" type="button" data-iact="install">התקנה</button><button class="btn ghost" type="button" data-iact="later">אחר כך</button>')+'</div></div>';
+  el.addEventListener('click', async e => {
+    const b = e.target.closest('[data-iact]');
+    if(!b && e.target !== el) return;
+    if(b && b.dataset.iact === 'install' && installEvt){
+      installEvt.prompt();
+      try{await installEvt.userChoice}catch(err){}
+      installEvt = null;
+    } else {try{sessionStorage.setItem('chem9-install-later','1')}catch(err){}}
+    el.remove();
+  });
+  document.body.appendChild(el);
+  const first = el.querySelector('.btn'); if(first) first.focus({preventScroll:true});
+}
+addEventListener('beforeinstallprompt', e => {e.preventDefault(); installEvt = e; showInstall()});
+addEventListener('appinstalled', () => {installEvt = null; const s = $('#isheet'); if(s) s.remove()});
+addEventListener('keydown', e => {if(e.key === 'Escape' && $('#isheet')){try{sessionStorage.setItem('chem9-install-later','1')}catch(err){} $('#isheet').remove()}});
+
 /* ---------- boot ---------- */
 if('scrollRestoration' in history) history.scrollRestoration = 'manual';
 history.replaceState({d:0}, '', route().tab === 'q' ? '#/learn' : (location.hash || '#/learn'));
 render(null, false);
 if('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+setTimeout(showInstall, 600);

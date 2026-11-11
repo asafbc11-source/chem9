@@ -320,3 +320,13 @@ details.ritem .rb{padding-bottom:12px;display:flex;flex-direction:column;gap:6px
 @keyframes vt-in{from{opacity:0;transform:translateX(-24px)}}
 @keyframes vt-in-back{from{opacity:0;transform:translateX(24px)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---------- install sheet ---------- */
+.iback{position:fixed;inset:0;z-index:50;background:rgba(10,14,20,.45);display:flex;align-items:flex-end;justify-content:center;animation:fadein .2s ease both}
+.isheet{width:100%;max-width:560px;background:var(--surface);border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px;animation:rise .22s ease-out both}
+.ihead{display:flex;align-items:center;gap:14px}
+.ihead img{width:56px;height:56px;border-radius:14px;flex:none}
+.isteps{margin:0;padding:0 22px 0 0;display:flex;flex-direction:column;gap:8px}
+.isteps svg{display:inline-block;width:20px;height:20px;vertical-align:-4px;color:var(--primary)}
+.isheet .btnrow .btn.wide{flex:1}
+@keyframes fadein{from{opacity:0}}

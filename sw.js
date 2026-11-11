@@ -1,6 +1,6 @@
 // Offline support. Everything is fetched fresh when online (so fixes arrive right away)
 // and served from the cache when offline. Only same-origin GET requests are handled.
-const VERSION = 'chem9-v3';
+const VERSION = 'chem9-v4';
 const FONTS = ['400-hebrew','400-latin','500-hebrew','500-latin','600-hebrew','600-latin','700-hebrew','700-latin'].map(f => './fonts/plex-hebrew-' + f + '.woff2')
   .concat(['./fonts/plex-mono-500-latin.woff2', './fonts/plex-mono-600-latin.woff2']);
 const CORE = ['./', './index.html', './styles.css', './data.js', './app.js', './manifest.webmanifest',
